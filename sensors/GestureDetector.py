@@ -62,8 +62,6 @@ with mp_hands.Hands(
 
                 # Check if thumb and index tip are close (OK sign)
                 thumb_index_distance = np.linalg.norm(thumb_tip[:2] - index_tip[:2])
-                thumb_middle_distance = np.linalg.norm(thumb_tip[:2] - middle_tip[:2])
-                
                 is_ok_sign = thumb_index_distance < 0.05 and fingers[1] and fingers[2] and fingers[3]  # Middle, ring, pinky are extended
 
                 # Count open fingers
@@ -79,9 +77,10 @@ with mp_hands.Hands(
                 
                 palm_down = wrist_y > mid_base_y  # If wrist is below middle base, palm is down
                 palm_up = wrist_y < mid_base_y  # If wrist is above middle base, palm is up
+                clenched_fist = fingers_open == 0  # All fingers closed (fist)
 
-                # Detect "Come Here" Gesture (Palm Up + Repeated Finger Movement)
-                if palm_up:
+                # Detect "Come Here" Gesture (Palm Up, Palm Down, or Clenched Fist + Repeated Finger Movement)
+                if palm_up or palm_down or clenched_fist:
                     moving_fingers = sum(fingers) in [1, 4]  # Only 1 or 4 fingers move
                     if moving_fingers:
                         if prev_finger_state != moving_fingers:
@@ -95,8 +94,8 @@ with mp_hands.Hands(
                 if is_ok_sign:
                     gesture = "OK"
 
-        # Display gesture result
-        cv2.putText(frame, gesture, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+        # Display gesture result in sky blue
+        cv2.putText(frame, gesture, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 191, 0), 2)
 
         # Show output
         cv2.imshow("Hand Gesture Recognition", frame)
