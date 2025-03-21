@@ -6,7 +6,7 @@ https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&dataSetS
 
 ## Dependencies
 ```sh
-pip install openai-whisper pyaudio mediapipe opencv-python msvc-runtime numpy
+pip install openai-whisper pyaudio mediapipe opencv-python msvc-runtime numpy tensorflow pandas scikit-learn
 
 sudo apt install ffmpeg  # Debian/Ubuntu
 choco install ffmpeg # Windows
