@@ -3,11 +3,11 @@ import json
 import time
 
 BROKER = "192.168.219.150"  # notebook ip
-TOPIC = "edgesense/pi01/sensor"
+TOPIC = "edgesense/rpi5/sensor"
 
 def create_payload():
     return {
-        "device_id": "pi01",
+        "device_id": "rpi5",
         "sensor_type": "speech",
         "value": "start",
         "confidence": 0.95,
@@ -17,7 +17,7 @@ def create_payload():
 def main():
     client = mqtt.Client()
     client.connect(BROKER, 1883, 60)
-    print(f"📡 Connected to MQTT Broker: {BROKER}")
+    print(f"Connected to MQTT Broker: {BROKER}")
 
     while True:
         payload = create_payload()
