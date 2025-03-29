@@ -1,7 +1,10 @@
+# netsh advfirewall firewall add rule name="MQTT" dir=in action=allow protocol=TCP localport=1883 
+# mosquitto.exe -c "C:\Program Files\mosquitto\mosquitto.conf" -v 
+
 import paho.mqtt.client as mqtt
 
 BROKER = "localhost"  # 외부 브로커가 아닌 내 노트북이 브로커니까 localhost
-TOPIC = "edgesense/pi01/sensor"
+TOPIC = "edgesense/rpi5/sensor"
 
 def on_connect(client, userdata, flags, rc):
     print(f"Connected to MQTT Broker (rc={rc})")
