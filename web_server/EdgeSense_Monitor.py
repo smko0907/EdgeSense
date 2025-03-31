@@ -2,6 +2,7 @@ from flask import Flask, Response, request, render_template_string
 import cv2
 import numpy as np
 from openni import openni2
+import os
 
 openni2.initialize()
 device = openni2.Device.open_any()
@@ -35,8 +36,10 @@ def gen_frames():
 
 @app.route('/')
 def index():
-    with open('dashboard.html', encoding='utf-8') as f:
+    html_path = os.path.join(os.path.dirname(__file__), 'dashboard.html')
+    with open(html_path, encoding='utf-8') as f:
         return render_template_string(f.read())
+
 
 @app.route('/video_feed')
 def video_feed():
@@ -60,7 +63,8 @@ def get_latest_command():
 
 if __name__ == '__main__':
     try:
-        app.run(host='0.0.0.0', port=5000)
+        app.run(host='0.0.0.0', port=5000) # external access
+        #app.run(host="127.0.0.1", port=5000) # internal access. local host
     finally:
         color_stream.stop()
         openni2.unload()
